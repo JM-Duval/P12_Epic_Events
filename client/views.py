@@ -3,17 +3,20 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from client.permissions import IsSalerContact, IsTechnicianEventContact, IsManager
-from client.serializers import UserSerializer, RegisterSerializer, ClientSerializer
+from client.permissions import IsSalerContact, IsTechnicianEventContact, \
+    IsManager
+from client.serializers import UserSerializer, RegisterSerializer, \
+    ClientSerializer
 from client.models import Client, User
 from event.models import Event
 from rest_framework.decorators import permission_classes
 from django_filters.rest_framework import DjangoFilterBackend
 
 
-class ClientViewset(viewsets.ModelViewSet):
+class ClientViewset(viewsets.ModelViewSet): 
 
-    permission_classes = [ IsSalerContact  | IsTechnicianEventContact | IsManager ]
+    permission_classes = [ IsSalerContact  | IsTechnicianEventContact |
+                           IsManager ]
     serializer_class = ClientSerializer
     queryset = Client.objects.all()
     http_method_names = ['get', 'post', 'delete', 'put']
@@ -24,26 +27,13 @@ class ClientViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         return Client.objects.all()
 
-    """
-    def get_queryset(self):
-        first_name = self.request.query_params.get('first_name')
-        email = self.request.query_params.get('email')
-        if first_name is not None:
-            return Client.objects.filter(first_name=first_name)
-        elif email is not None:
-            return Client.objects.filter(email=email)
-        else:
-            return Client.objects.all()
-    """
     def list(self, request):
-        print('////', request.user.role)
-        if request.user.role == 'saler': # saler
+        if request.user.role == 'saler':
             id_user = request.user.id
             clients = Client.objects.filter(sales_contact=id_user)
-            print(clients)
             serializer = ClientSerializer(clients, many=True)
             return Response(serializer.data)
-        elif request.user.role == 'technician': # technicien
+        elif request.user.role == 'technician': 
             events = Event.objects.filter(support_contact=request.user.id)
             id_clients = []
             for event in events:
@@ -56,7 +46,6 @@ class ClientViewset(viewsets.ModelViewSet):
             serializer = UserSerializer(clients, many=True)
             return Response(serializer.data)
         
-
     def create(self, request, *args, **kwargs):
         request.POST._mutable = True  
         request.data["sales_contact"] = request.user.id
@@ -84,7 +73,9 @@ class RegisterApi(generics.GenericAPIView):
         user = serializer.save()
         return Response(
             {
-                "user": UserSerializer(user, context=self.get_serializer_context()).data,
-                "message": "User Created Successfully. Now perform Login to get your token",
+                "user": UserSerializer(user,
+                                       context=self.get_serializer_context()).data,
+                "message": "User Created Successfully. Now perform Login to get"
+                           " your token",
             }
         )

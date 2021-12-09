@@ -51,8 +51,10 @@ class Client(models.Model):
     first_name = models.CharField(max_length=25, blank=True)
     last_name = models.CharField(max_length=25, blank=True)
     email = models.EmailField(max_length=100, unique=True)
-    phone = models.CharField(max_length=20, validators=[RegexValidator(r'^\d{1,10}$')])
-    mobile = models.CharField(max_length=20, validators=[RegexValidator(r'^\d{1,10}$')])
+    phone = models.CharField(max_length=20, 
+        validators=[RegexValidator(r'^\d{1,10}$')])
+    mobile = models.CharField(max_length=20, 
+        validators=[RegexValidator(r'^\d{1,10}$')])
     company_name = models.CharField(max_length=250, blank=True)
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateField(auto_now_add=True)

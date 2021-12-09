@@ -6,6 +6,13 @@ METHODES_CREATE_READ = [ 'GET', 'POST']
 METHODES_PUT_DEL = [ 'PUT', 'DELETE']
 
 
+class IsManager(BasePermission):
+
+	def has_permission(self, request, view):
+		if request.user.role == 'manager':
+			return True
+
+
 class IsSalerContact(BasePermission):
 
 	message = "L'utilisateur doit être le référent commercial du contrat"
@@ -16,6 +23,7 @@ class IsSalerContact(BasePermission):
 				return True
 		else:
 			return False
+
 
 class IsTechnicianEventContact(BasePermission):
 
@@ -32,4 +40,3 @@ class IsTechnicianEventContact(BasePermission):
 					return True
 		else:
 			return False
-

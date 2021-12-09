@@ -12,7 +12,7 @@ class ClientAdmin(admin.ModelAdmin):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("username", "password", "first_name", "last_name", "role")
+        fields = ("username", "password", "first_name", "last_name", "role", "is_admin")
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -26,7 +26,7 @@ class UserForm(forms.ModelForm):
 class UserAdmin(admin.ModelAdmin):
     form = UserForm
 
-    list_display = ('first_name', 'last_name', 'username', 'role', 'password')
+    list_display = ('first_name', 'last_name', 'username', 'role', 'password', "is_admin")
     list_filter = ("role",)
 
 """

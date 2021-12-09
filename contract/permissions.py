@@ -6,6 +6,13 @@ METHODES_CREATE_READ = [ 'GET', 'POST']
 METHODES_PUT_DEL = [ 'PUT', 'DELETE']
 
 
+class IsManager(BasePermission):
+
+	def has_permission(self, request, view):
+		if request.user.role == 'manager':
+			return True
+
+
 class IsSalerContact(BasePermission):
 
 	message = "L'utilisateur doit être le référent commercial du contrat"

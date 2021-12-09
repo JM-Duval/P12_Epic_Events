@@ -3,6 +3,6 @@ from .models import Contract
 
 class ContractAdmin(admin.ModelAdmin):
 	list_display = ('client', 'sales_contact', 'date_created', 'date_updated',
-		'status', 'amount', 'payment_due')
+		'status', 'amount', 'payment_due', 'id')
 
 admin.site.register(Contract, ContractAdmin)

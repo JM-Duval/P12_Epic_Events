@@ -4,8 +4,6 @@ from django.conf import settings
 from client.models import User
 
 class Contract(models.Model):
-    #client = models.ForeignKey(to=Client, on_delete=models.CASCADE)
-    #client = models.OneToOneField(to=Client, on_delete=models.CASCADE)
     sales_contact = models.ForeignKey(to=User, on_delete=models.CASCADE)
     client = models.ForeignKey(to=Client, on_delete=models.CASCADE)
     date_created = models.DateField(auto_now_add=True)

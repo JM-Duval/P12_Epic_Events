@@ -47,8 +47,3 @@ class ClientSerializer(ModelSerializer):
 
     def validate_password(self, value: str) -> str:
         return make_password(value)
-
-
-"""
-first_name, last_name, email, phone, mobile, company_name, sales_contact, role
-"""
