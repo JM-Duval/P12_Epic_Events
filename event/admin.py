@@ -3,7 +3,8 @@ from .models import Event
 
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('client', 'support_contact', 'event_status', 'attendees', 'event_date',
-		'notes')
+		'date_created', 'notes')
+
 
 admin.site.register(Event, EventAdmin)
 

@@ -8,8 +8,8 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ("id", "first_name", "last_name", "username", "role", 
-            "password")
+        fields = ['id', 'username', 'first_name', 'last_name', 'role',
+            'password']
 
         extra_kwargs = {
             "password": {"write_only": True},
@@ -17,18 +17,22 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(
-            validated_data["username"],
+            username=validated_data["username"],
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
             password=validated_data["password"],
-            email=validated_data["email"],
         )
+
+    def validate_password(self, value: str) -> str:
+        return make_password(value)
 
 
 class UserSerializer(ModelSerializer): 
                 
     class Meta:
         model = User
-        fields = ("id", "first_name", "last_name", "username", "role", 
-            "password")
+        fields = ['id', 'first_name', 'last_name',
+            'role', 'password']
 
     def validate_password(self, value: str) -> str:
             return make_password(value)
@@ -40,3 +44,11 @@ class ClientSerializer(ModelSerializer):
         model = Client
         fields = ['id', 'first_name', 'last_name', 'email', 'company_name',
             'sales_contact']
+
+    def validate_password(self, value: str) -> str:
+        return make_password(value)
+
+
+"""
+first_name, last_name, email, phone, mobile, company_name, sales_contact, role
+"""

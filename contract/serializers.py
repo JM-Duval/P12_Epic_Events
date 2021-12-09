@@ -4,8 +4,8 @@ from contract.models import Contract
 
 
 class ContractSerializer(ModelSerializer):
-	date_created = serializers.DateTimeField(format="%d-%m-%Y")
-	payment_due = serializers.DateTimeField(format="%d-%m-%Y")
+	date_created = serializers.DateField(format="%d-%m-%Y")
+	payment_due = serializers.DateField(format="%d-%m-%Y")
 	class Meta:
 		model = Contract
 		fields = ['id', 'sales_contact', 'client', 'status', 'amount',

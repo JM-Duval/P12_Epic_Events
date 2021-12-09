@@ -24,7 +24,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from client.views import ClientViewset
 from contract.views import ContractViewset
 from event.views import EventViewset
-#from client.views import RegisterApi
+from client.views import RegisterApi
 
 # création du routeur
 router = routers.SimpleRouter()
@@ -45,7 +45,7 @@ urlpatterns = [
     path('', include(event_router.urls)),
     #path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    #path('signup/', RegisterApi.as_view(), name='signup'),
+    path('signup/', RegisterApi.as_view(), name='signup'),
     path('login/', TokenObtainPairView.as_view(), name='obtain_tokens'),
     path('token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
 ]
